@@ -30,6 +30,21 @@
      ]
  };
 
+ var albumFriends = {
+     title: 'Friends',
+     artist: 'The Gang',
+     label: 'NBC',
+     year: '1994',
+     albumArtUrl: 'assets/images/album_covers/08.png',
+     songs: [
+         { title: 'The Pilot', duration: '4:03' },
+         { title: 'Nana Dies Twice', duration: '2:09' },
+         { title: 'The Candy Hearts', duration: '4:12'},
+         { title: 'All the Poker', duration: '2:14' },
+         { title: 'Heckles Dies', duration: '3:04'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -41,6 +56,7 @@
 
      return template;
  };
+ var albumImage = document.getElementsByClassName('album-cover-art')[0];
 
  var setCurrentAlbum = function(album) {
     // #1
@@ -67,4 +83,16 @@
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+};
+
+albumImage.addEventListener("click", myfunction);
+
+var i = 0;
+function myfunction() {
+  var albums = [albumPicasso,albumMarconi,albumFriends];
+  if (i == albums.length) {
+    i = 0;
+  }
+  setCurrentAlbum(albums[i]);
+  i++;
 };
