@@ -105,6 +105,18 @@ var trackIndex = function(album, song) {
      return album.songs.indexOf(song);
  };
 
+var togglePlayFromPlayerBar = function(){
+    if (currentSoundFile.isPaused()) {
+      $(this).html(pauseButtonTemplate);
+                $('.main-controls .play-pause').html(playerBarPauseButton);
+                currentSoundFile.play();
+    } else {
+               $(this).html(playButtonTemplate);
+               $('.main-controls .play-pause').html(playerBarPlayButton);
+                currentSoundFile.pause();
+        }
+};
+
 var nextSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentSongIndex++;
@@ -114,8 +126,7 @@ var nextSong = function() {
     }
 
     var lastSongNumber = currentlyPlayingSongNumber;
-
-    currentlyPlayingSongNumber = currentSongIndex + 1;
+    setSong(currentSongIndex+1);
     currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
@@ -137,7 +148,7 @@ var previousSong = function() {
     }
 
     var lastSongNumber = currentlyPlayingSongNumber;
-    currentlyPlayingSongNumber = currentSongIndex + 1;
+    setSong(currentSongIndex+1);
     currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
@@ -172,10 +183,12 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
  var currentVolume = 80;
  var $previousButton = $('.main-controls .previous');
  var $nextButton = $('.main-controls .next');
+ var $controls = $('.main-controls .play-pause');
 
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $controls.click(togglePlayFromPlayerBar);
 });
